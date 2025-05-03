@@ -16,6 +16,21 @@ export class User {
   @Column()
   password: string;
 
+  @Column({ default: false })
+  activated : boolean;
+
+  @Column({default : null})
+  activationCode : string;
+
+  @Column({default : null})
+  activationCodeExpiration : Date;
+
+  @Column({default : null})
+  passwordResetCode : string;
+
+  @Column({default : null})
+  passwordResetCodeExpiration : Date;
+
   @OneToMany(() => Reservation, (reservation) => reservation.user)
   reservations: Reservation[];
 }

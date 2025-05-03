@@ -10,6 +10,7 @@ import { RentalCompanyModule } from './rental-company/rental-company.module';
 import { ReservationModule } from './reservation/reservation.module';
 import { CarModule } from './car/car.module';
 import { AuthModule } from './auth/auth.module';
+import { MailModule } from './mail/mail.module';
 
 
 @Module({
@@ -22,7 +23,7 @@ import { AuthModule } from './auth/auth.module';
     database: 'car_rental', // Your database name
     entities: [User, CarRentalCompany, Car, Reservation], // Entities
     synchronize: true,      // Auto-sync database schema (disable in production)
-  }),UserModule,ReservationModule,RentalCompanyModule,CarModule,AuthModule],
+  }),UserModule,ReservationModule,RentalCompanyModule,CarModule,AuthModule, MailModule],
   controllers: [],
   providers: [],
 })
