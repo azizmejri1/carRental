@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #ffffff;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background-color: #fafafa;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+nav{
+  color: #ededed;
+  background-color: #141b2d;
+
+}
+li {
+  margin: 10px 5px;
+
+}
+h1 {
+  margin: 10px;
+
+}
+.button {
+  background: white;
+  padding: 10px 15px;
+  color: #141b2d;
+  border-radius: 9px;
+
+}
+
+.button:hover {
+  background: #141b2d;
+  color: white;
+  cursor: pointer;
+  border: solid 2px #ffff;
+
+}
+
+.carButton {
+  background: #141b2d;
+  padding: 10px 15px;
+  color: white;
+  border-radius: 9px;
+
+}
+
+.carButton:hover {
+  background: #ffff;
+  color: #141b2d;
+  cursor: pointer;
+  border: solid 2px #141b2d;
+
+  
+}
+
+.main{
+  position: relative;
+  background-image: url('https://cdn.outsideonline.com/wp-content/uploads/2025/02/brice-cooper-ja-SM5hs77o-unsplash.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 92vh; /* Make the container fill the viewport */
+
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000ba; /* Dark overlay with low opacity */
+  z-index: 1; /* Ensures the overlay is on top of the image */
+}
+
+.content {
+  position: relative;
+  z-index: 2; /* Ensures the content is above the overlay */
+  color: white; /* Text color to be visible on dark background */
+  padding: 20px;
+}
+
+
+.input{
+  background-color: white;
+  margin: 5px;
+  color: #171717;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid #141b2d;
+  width: 95%;
+}
+
+.search{
+  padding: 10px;
+  border-radius: 10px;
+  margin: 5px;
+  background-color: #141b2d;
+  border: solid 2px #ffff;
+
+}
+
+.search:hover{
+  background-color: #ffff;
+  color: #141b2d;
+  cursor: pointer;
+}
+
+.sideBar{
+  background-color: #141b2d;
+  color: white;
+  padding: 10px;
+  width: 20%;
+}
+@media (max-width: 768px){
+  .sideBar{
+    width: 100%;
+  }
+}
+.loginButton{
+  background-color: #141b2d;
+}
+
+
+.loginButton:hover{
+  background-color: #ffff;
+  color: #141b2d;
+  cursor: pointer;
+  border: solid 2px #141b2d;
+
+}
+
+table {
+  border-collapse: collapse;
+  width: 80%;
+  height: fit-content;
+  margin: 50px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid rgb(20 27 45);
+  height : 50px;
+  
+}
+
+thead {
+  background-color: rgb(20 27 45);
+  color: white;
+
+}
