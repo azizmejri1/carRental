@@ -2,7 +2,7 @@ import { ConflictException, Injectable, InternalServerErrorException, NotFoundEx
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { User } from './user.entity';
-import { UserDto } from './userDto';
+import { ActivateUserDto, UserDto } from './userDto';
 import * as bcrypt from 'bcrypt';
 import { AuthController } from 'src/auth/auth.controller';
 import { Response } from 'express';
@@ -65,76 +65,85 @@ export class UserService {
       const subject : string = "Account activation"
       const text : string = "your code is : " + code;
       const htmlTemplate = `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Email</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 20px;
-    }
-    .email-container {
-      max-width: 600px;
-      margin: auto;
-      background-color: #ffffff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    .header {
-      text-align: center;
-      font-size: 24px;
-      color: #333333;
-    }
-    .content {
-      font-size: 16px;
-      color: #555555;
-      line-height: 1.5;
-      margin-top: 20px;
-    }
-    .footer {
-      text-align: center;
-      font-size: 12px;
-      color: #aaaaaa;
-      margin-top: 30px;
-    }
-    .code-box {
-      background-color: #f0f0f0;
-      border-radius: 4px;
-      padding: 10px;
-      font-weight: bold;
-      font-size: 20px;
-      color: #000;
-      letter-spacing: 2px;
-      text-align: center;
-      margin: 20px 0;
-    }
-  </style>
-</head>
-<body>
-  <div class="email-container">
-    <div class="header">Welcome to AutoGo!</div>
-    <div class="content">
-      <p>Hi {{username}},</p>
-      <p>Thank you for registering. Please use the code below to verify your email address:</p>
-      <div class="code-box">{{verificationCode}}</div>
-      <p>This code will expire in 15 minutes.</p>
-      <p>If you didn't request this, please ignore this email.</p>
-    </div>
-    <div class="footer">
-      &copy; 2025 AutoGo. All rights reserved.
-    </div>
-  </div>
-</body>
-</html>
-`;
-const finalHtml = htmlTemplate
-  .replace('{{username}}', name)
-  .replace('{{verificationCode}}', code);
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Email</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+          }
+          .email-container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+          }
+          .header {
+            text-align: center;
+            font-size: 24px;
+            color: #333333;
+          }
+          .content {
+            font-size: 16px;
+            color: #555555;
+            line-height: 1.5;
+            margin-top: 20px;
+          }
+          .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #aaaaaa;
+            margin-top: 30px;
+          }
+          .code-box {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #000;
+            letter-spacing: 2px;
+            text-align: center;
+            margin: 20px 0;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="email-container">
+          <div class="header">Welcome to AutoGo!</div>
+          <div class="content">
+            <p>Hi {{username}},</p>
+            <p>Thank you for registering. Please use the code below to verify your email address:</p>
+            <div class="code-box">{{verificationCode}}</div>
+            <p>This code will expire in 15 minutes.</p>
+            <p>If you didn't request this, please ignore this email.</p>
+          </div>
+          <div class="footer">
+            &copy; 2025 AutoGo. All rights reserved.
+          </div>
+        </div>
+      </body>
+      </html>
+      `;
+      const finalHtml = htmlTemplate
+      .replace('{{username}}', name)
+      .replace('{{verificationCode}}', code);
       await this.mailService.sendMail(email,subject,text,finalHtml);
+    }
+
+    async verifyActivationCode(activateUserDto : ActivateUserDto) {
+      const {userId ,code } = activateUserDto;
+      const user = await this.userRepository.findOne({where : {id: userId}});
+      if(user?.activationCode == code){
+        return true;
+      }
+      return false;
     }
 }

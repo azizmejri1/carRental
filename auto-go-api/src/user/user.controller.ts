@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Param, Post, Put, Res, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
-import { UserDto } from './userDto';
+import { ActivateUserDto, UserDto } from './userDto';
 import { AuthGuard } from 'src/auth/AuthGuard';
 import { Response } from 'express';
 
@@ -14,6 +14,11 @@ export class UserController {
         this.userService.create(userDto,res);
     }
 
+    @Post('activate')
+    async verifyActivationCode(@Body() activateUserDto : ActivateUserDto){
+        const active = await this.userService.verifyActivationCode(activateUserDto);
+        return {isActive : active};
+    }
     @UseGuards(AuthGuard)
     @Put(':id')
     async update(@Param('id') id: number, @Body() updateUserDto: Partial<UserDto>) {
