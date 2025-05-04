@@ -1,4 +1,5 @@
 "use client";
+import Activation from "@/components/activation";
 import MainPage from "@/components/mainPage";
 import Navbar from "@/components/navbar";
 import axios from "axios";
@@ -10,6 +11,8 @@ export default function Home() {
   const [username, setUsername] = useState("");
   const [name, setName] = useState("");
   const [logged, setLogged] = useState(false);
+  const [activated, setActivated] = useState(false);
+  const [userId, setUserId] = useState<number | null>(null);
 
   useEffect(() => {
     axios
@@ -17,15 +20,45 @@ export default function Home() {
         withCredentials: true,
       })
       .then((response) => {
-        const { username, name } = response.data;
+        console.log("Profile data:", response.data);
+        const { sub, username, name } = response.data;
         setUsername(username);
         setName(name);
         setLogged(true);
+        setUserId(sub); // Set userId after profile data is fetched
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
       });
-  }, [router]);
+  }, []); // Only run on initial render
+
+  useEffect(() => {
+    // Only make the second request once userId is available
+    if (userId !== null) {
+      console.log("Fetching activation status for userId:", userId);
+      axios
+        .get("http://localhost:8080/user/activated/" + userId, {
+          withCredentials: true,
+        })
+        .then((response) => {
+          const activated: boolean = JSON.parse(response.data);
+          setActivated(activated);
+        })
+        .catch((error) => {
+          console.error("Error fetching activation status:", error);
+        });
+    }
+  }, [userId]); // Run when userId changes
+
+  if (!activated && logged) {
+    return (
+      <Activation
+        setActivated={setActivated}
+        userId={userId}
+        setUserId={setUserId}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">

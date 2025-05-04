@@ -1,4 +1,4 @@
-import { ConflictException, Injectable, InternalServerErrorException, NotFoundException, Res } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException, NotFoundException, Request, Res } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { User } from './user.entity';
@@ -138,12 +138,23 @@ export class UserService {
       await this.mailService.sendMail(email,subject,text,finalHtml);
     }
 
-    async verifyActivationCode(activateUserDto : ActivateUserDto) {
+    async verifyActivationCode(activateUserDto : ActivateUserDto,@Request() req) {
       const {userId ,code } = activateUserDto;
       const user = await this.userRepository.findOne({where : {id: userId}});
       if(user?.activationCode == code){
+        user.activated = true;
+        await this.userRepository.save(user);
+        req['user'].activated = true;
         return true;
       }
       return false;
+    }
+
+    async accountActivated(id : number){
+      const user = await this.userRepository.findOne({where : {id}});
+      if(!user){
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      return user.activated;
     }
 }

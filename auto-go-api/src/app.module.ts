@@ -11,18 +11,26 @@ import { ReservationModule } from './reservation/reservation.module';
 import { CarModule } from './car/car.module';
 import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    type: 'postgres',       // Database type
-    host: 'localhost',      // PostgreSQL host
-    port: 5432,             // Default PostgreSQL port
-    username: 'postgres',   // Your database username
-    password: 'aziz2003',   // Your database password
-    database: 'car_rental', // Your database name
-    entities: [User, CarRentalCompany, Car, Reservation], // Entities
-    synchronize: true,      // Auto-sync database schema (disable in production)
+  imports: [ConfigModule.forRoot({
+    isGlobal: true, // makes ConfigService available globally
+    envFilePath: '.env', // optional, default is '.env'
+  }),TypeOrmModule.forRootAsync({
+    imports: [ConfigModule],
+    inject: [ConfigService],
+    useFactory: (config: ConfigService) => ({
+      type: config.get<'postgres'>('DB_TYPE'),
+      host: config.get<string>('DB_HOST'),
+      port: config.get<number>('DB_PORT'),
+      username: config.get<string>('DB_USERNAME'),
+      password: config.get<string>('DB_PASSWORD'),
+      database: config.get<string>('DB_NAME'),
+      entities: [User, CarRentalCompany, Car, Reservation], // Entities
+      synchronize: true, // WARNING: disable in production
+    }),
   }),UserModule,ReservationModule,RentalCompanyModule,CarModule,AuthModule, MailModule],
   controllers: [],
   providers: [],

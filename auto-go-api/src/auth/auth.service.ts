@@ -55,7 +55,7 @@ export class AuthService {
         if (!user) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const payload = { sub: user.id, username: user.email , name: user.name, role: loginDto.role };
+        const payload = { sub: user.id, username: user.email , name: user.name, role: loginDto.role , activated : user.activated };
         const access_token = await this.jwtService.signAsync(payload);
         res.cookie('jwt', access_token, {
             httpOnly: true,  // Prevents client-side JavaScript access

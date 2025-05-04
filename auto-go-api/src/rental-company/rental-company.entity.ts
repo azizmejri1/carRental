@@ -18,6 +18,21 @@ export class CarRentalCompany {
   @Column()
   location: string;
 
+  @Column({ default: false })
+  activated : boolean;
+
+  @Column({default : null})
+  activationCode : string;
+
+  @Column({default : null})
+  activationCodeExpiration : Date;
+
+  @Column({default : null})
+  passwordResetCode : string;
+
+  @Column({default : null})
+  passwordResetCodeExpiration : Date;
+  
   @OneToMany(() => Car, (car) => car.company)
   cars: Car[];
 }
