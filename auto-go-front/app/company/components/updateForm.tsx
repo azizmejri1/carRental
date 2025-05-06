@@ -5,9 +5,11 @@ import { Dispatch, SetStateAction, useState } from "react";
 export default function UpdateForm({
   company,
   setCompany,
+  onSuccess,
 }: {
   company: Partial<RentalCompany>;
   setCompany: Dispatch<SetStateAction<Partial<RentalCompany>>>;
+  onSuccess?: () => void;
 }) {
   const [error, setError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);

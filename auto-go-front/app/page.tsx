@@ -13,6 +13,7 @@ export default function Home() {
   const [logged, setLogged] = useState(false);
   const [activated, setActivated] = useState(false);
   const [userId, setUserId] = useState<number | null>(null);
+  const [role, setRole] = useState<string | null>(null);
 
   useEffect(() => {
     axios
@@ -21,23 +22,27 @@ export default function Home() {
       })
       .then((response) => {
         console.log("Profile data:", response.data);
-        const { sub, username, name } = response.data;
+        const { sub, username, name, role } = response.data;
         setUsername(username);
         setName(name);
         setLogged(true);
-        setUserId(sub); // Set userId after profile data is fetched
+        setUserId(sub);
+        setRole(role);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
       });
-  }, []); // Only run on initial render
+  }, []);
 
   useEffect(() => {
-    // Only make the second request once userId is available
     if (userId !== null) {
       console.log("Fetching activation status for userId:", userId);
+      let url = "http://localhost:8080/user/activated/" + userId;
+      if (role == "admin") {
+        url = "http://localhost:8080/rental-company/accountActivated/" + userId;
+      }
       axios
-        .get("http://localhost:8080/user/activated/" + userId, {
+        .get(url, {
           withCredentials: true,
         })
         .then((response) => {
@@ -48,7 +53,7 @@ export default function Home() {
           console.error("Error fetching activation status:", error);
         });
     }
-  }, [userId]); // Run when userId changes
+  }, [userId]);
 
   if (!activated && logged) {
     return (
@@ -62,11 +67,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar logged={logged} name={name} />
+      <Navbar logged={logged} name={name} role={role} />
       <main className="flex-grow">
         <MainPage />
       </main>
-      {/* You could add a footer here */}
     </div>
   );
 }
