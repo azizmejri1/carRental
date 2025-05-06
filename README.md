@@ -6,30 +6,30 @@ A full-stack car rental platform that allows users to browse, filter, and book c
 
 ## 📸 Screenshots
 
-### 🏠 Home Page
-![Home Page](./screenshots/homepage.PNG)
+<h3>🏠 Home Page</h3>
+<img src="./screenshots/homepage.PNG" alt="Home Page" width="50%">
 
-### 🔐 Login & Signup
-![Login Page](./screenshots/login.PNG)
-![Signup Page](./screenshots/singup.PNG)
+<h3>🔐 Login & Signup</h3>
+<img src="./screenshots/login.PNG" alt="Login Page" width="50%">
+<img src="./screenshots/singup.PNG" alt="Signup Page" width="50%">
 
-### 📧 Email Verification
-![Email Verification](./screenshots/email-verification.PNG)
-![Email Verification1](./screenshots/email.PNG)
+<h3>📧 Email Verification</h3>
+<img src="./screenshots/email-verification.PNG" alt="Email Verification" width="50%">
+<img src="./screenshots/email.PNG" alt="Email Verification1" width="50%">
 
-### 🚘 Search Results
-![Search Results](./screenshots/search-results.PNG)
+<h3>🚘 Search Results</h3>
+<img src="./screenshots/search-results.PNG" alt="Search Results" width="50%">
 
-### 👤 User Profile
-![User Profile](./screenshots/user-profile.PNG)
+<h3>👤 User Profile</h3>
+<img src="./screenshots/user-profile.PNG" alt="User Profile" width="50%">
 
-### 🛠️ Admin Dashboard
-![Admin Dashboard](./screenshots/admin-dashboard.PNG)
+<h3>🛠️ Admin Dashboard</h3>
+<img src="./screenshots/admin-dashboard.PNG" alt="Admin Dashboard" width="50%">
 
-### 🚗 Car Management Interface
-![Car Management](./screenshots/car-management.PNG)
+<h3>🚗 Car Management Interface</h3>
+<img src="./screenshots/car-management.PNG" alt="Car Management" width="50%">
 
-
+---
 
 ## 🚀 Key Features
 
@@ -62,6 +62,3 @@ A full-stack car rental platform that allows users to browse, filter, and book c
 ### Frontend
 - **React** – Component-based frontend library
 - **Tailwind CSS** – Utility-first CSS framework
-
-
-
