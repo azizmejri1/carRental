@@ -1,10 +1,11 @@
 import { Controller, Post, Body, Put, Param, Delete, UseGuards, Res, Get, Req,Request } from '@nestjs/common';
 import { RentalCompanyService } from './rental-company.service';
-import { CreateRentalCompanyDto } from './rentalCompanyDto';
+import { ActivateCompanyDto, CreateRentalCompanyDto } from './rentalCompanyDto';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/roles.enum';
 import { AuthGuard } from 'src/auth/AuthGuard';
 import { Response } from 'express';
+import { ActivateUserDto } from 'src/user/userDto';
 
 @Controller('rental-company')
 export class RentalCompanyController {
@@ -42,6 +43,17 @@ export class RentalCompanyController {
         return this.rentalCompanyService.getCompanyStatistics(id);
     }
 
+    @Get('accountActivated/:id')
+    async accountActivated(@Param('id') id:number){
+        return this.rentalCompanyService.accountActivated(id);
+    }
+
+    @UseGuards(AuthGuard)
+    @Post('activate')
+    async verifyActivationCode(@Body() activateUserDto : ActivateUserDto, @Request() req){
+            const active = await this.rentalCompanyService.verifyActivationCode(activateUserDto,req);
+            return {isActive : active};
+    }
     
 
 }

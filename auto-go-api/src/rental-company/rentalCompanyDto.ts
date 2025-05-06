@@ -1,4 +1,5 @@
-import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsEmail, IsNotEmpty, IsNumber, IsString, MinLength } from 'class-validator';
 
 export class CreateRentalCompanyDto {
   
@@ -21,4 +22,14 @@ export class companyStatistcs{
   numberOfReservations : number;
   numberOfClients : number;
   totalRevenue : number;
+}
+export class ActivateCompanyDto {
+    
+    @IsNotEmpty()
+    @IsNumber()
+    @Type(() => Number)
+    userId: number;
+
+    @IsString()
+    code :string;
 }

@@ -21,7 +21,7 @@ export default function RegisterForm() {
         { name, location, email, password },
         { withCredentials: true }
       );
-      router.push("/");
+      router.push("/company/dashboard");
     } catch (error) {
       console.error("Registration failed:", error);
     }

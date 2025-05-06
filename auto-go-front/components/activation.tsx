@@ -15,6 +15,7 @@ export default function Activation({
   const [code, setCode] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [role, setRole] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -23,8 +24,9 @@ export default function Activation({
         withCredentials: true,
       })
       .then((response) => {
-        const { sub, username, name } = response.data;
+        const { sub, username, name, role } = response.data;
         setUserId(sub);
+        setRole(role);
       })
       .catch((error) => {
         console.error("Error fetching user data:", error);
@@ -37,7 +39,10 @@ export default function Activation({
     setErrorMessage(null);
 
     try {
-      const url = "http://localhost:8080/user/activate";
+      let url = "http://localhost:8080/rental-company/activate";
+      if (role == "user") {
+        url = "http://localhost:8080/user/activate";
+      }
       const data = { userId, code };
       const response = await axios.post(url, data, { withCredentials: true });
 

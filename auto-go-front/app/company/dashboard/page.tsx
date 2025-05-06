@@ -1,18 +1,35 @@
 "use client";
+import Activation from "@/components/activation";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
   const [statistics, setStatistics] = useState<Stistics | null>(null);
-  const searchParams = useSearchParams();
-  const id = Number(searchParams.get("id"));
+  const [id, setId] = useState<number | null>(null);
 
   useEffect(() => {
-    const url = "http://localhost:8080/rental-company/statistics/" + id;
-    axios.get(url, { withCredentials: true }).then((response) => {
-      setStatistics(response.data);
-    });
+    axios
+      .get("http://localhost:8080/auth/profile", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log("Profile data:", response.data);
+        const { sub, username, name } = response.data;
+        setId(sub);
+      })
+      .catch((error) => {
+        console.error("Error fetching user data:", error);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (id !== null) {
+      const url = "http://localhost:8080/rental-company/statistics/" + id;
+      axios.get(url, { withCredentials: true }).then((response) => {
+        setStatistics(response.data);
+      });
+    }
   }, [id]);
 
   const formatCurrency = (amount: number) => {
