@@ -121,9 +121,9 @@ export class ReservationService {
         relations: ['car', 'car.company', 'user'], // preload car.company too
       });
     
-      if (reservations.length === 0) {
+      /*if (reservations.length === 0) {
         throw new NotFoundException("no reservation found");
-      }
+      }*/
     
       const returnedReservations: ReservationDto[] = [];
     
@@ -136,10 +136,38 @@ export class ReservationService {
             startDate: reservation.startDate,
             endDate: reservation.endDate,
             totalPrice : reservation.totalPrice,
+            location : reservation.car.company.location
           });
         }
       }
     
+      return returnedReservations;
+    }
+
+    async getReservationsByUser(id : number) : Promise<ReservationDto[]>{
+      const reservations = await this.reservationRepository.find({
+        relations: ['car', 'car.company', 'user'], // preload car.company too
+      });
+    
+      /*if (reservations.length === 0) {
+        throw new NotFoundException("no reservation found");
+      }*/
+    
+      const returnedReservations: ReservationDto[] = [];
+    
+      for (const reservation of reservations) {
+        if (reservation.user.id === id) {
+          returnedReservations.push({
+            id: reservation.id,
+            carId: reservation.car.id,
+            userId: reservation.user.id,
+            startDate: reservation.startDate,
+            endDate: reservation.endDate,
+            totalPrice : reservation.totalPrice,
+            location : reservation.car.company.location
+          });
+        }
+      }
       return returnedReservations;
     }
     

@@ -8,6 +8,8 @@ export default function RegisterForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent) => {
@@ -15,7 +17,7 @@ export default function RegisterForm() {
     try {
       const response = await axios.post(
         "http://localhost:8080/user/create",
-        { name, email, password },
+        { name, firstName, lastName, email, password },
         { withCredentials: true }
       );
       router.push("/");
@@ -30,8 +32,36 @@ export default function RegisterForm() {
         <h2 className="text-3xl font-bold text-center">Sign Up</h2>
 
         <div className="flex flex-col">
+          <label htmlFor="firstName" className="text-sm font-medium mb-1">
+            first name
+          </label>
+          <input
+            type="text"
+            id="firstName"
+            placeholder="Enter your first name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="flex flex-col">
+          <label htmlFor="lastName" className="text-sm font-medium mb-1">
+            last name
+          </label>
+          <input
+            type="text"
+            id="lastName"
+            placeholder="Enter your last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+        </div>
+        <div className="flex flex-col">
           <label htmlFor="name" className="text-sm font-medium mb-1">
-            Name
+            username
           </label>
           <input
             type="text"

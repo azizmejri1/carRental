@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Param, Post, Put, Res, UseGuards, Request, Get } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ActivateUserDto, UserDto } from './userDto';
+import { ActivateUserDto, UserDto, UpdatePasswordDto } from './userDto';
 import { AuthGuard } from 'src/auth/AuthGuard';
 import { Response } from 'express';
 
@@ -25,6 +25,12 @@ export class UserController {
     async accountActivated(@Param('id') id:number){
         return this.userService.accountActivated(id);
     }
+
+    @UseGuards(AuthGuard)
+    @Post('/updatePassword/:id')
+    async updatePassword(@Body() updatePasswordDto:UpdatePasswordDto,@Param('id') id: number){
+        return this.userService.updatePassword(updatePasswordDto,id);
+    }
     @UseGuards(AuthGuard)
     @Put(':id')
     async update(@Param('id') id: number, @Body() updateUserDto: Partial<UserDto>) {
@@ -35,6 +41,11 @@ export class UserController {
     @Delete(':id')
     async delete(@Param('id') id: number) {
         return this.userService.delete(id);
+    }
+
+    @Get(':id')
+    async getUserById(@Param('id') id){
+        return this.userService.getUserById(id);
     }
 
 

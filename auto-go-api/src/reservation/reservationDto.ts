@@ -59,4 +59,7 @@ export class ReservationDto {
   @Type(() => Number)
   totalPrice: number;
 
+  @IsNotEmpty()
+  location : string;
+
 }

@@ -23,7 +23,7 @@ export class RentalCompanyService {
       ) {}
     
       async create(createRentalCompanyDto: CreateRentalCompanyDto,@Res() res: Response) {
-        const { name , location, email, password } = createRentalCompanyDto;
+        const {name , location, email, password } = createRentalCompanyDto;
         const existingCompany = await this.rentalCompanyRepository.findOne({ where: { email: createRentalCompanyDto.email } });
         if (existingCompany) {
           throw new ConflictException('Email already exists');

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import axios from "axios";
 
 export default function AddCar({
   id,
@@ -27,17 +28,18 @@ export default function AddCar({
     if (image) formData.append("image", image);
 
     try {
-      const response = await fetch("http://localhost:8080/car/create", {
-        method: "POST",
-        credentials: "include",
-        body: formData,
-      });
+      const response = await axios.post(
+        "http://localhost:8080/car/create",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-      if (response.ok) {
-        showAvailable();
-      } else {
-        console.error("Error adding car");
-      }
+      showAvailable();
     } catch (error) {
       console.error("Error adding car:", error);
     } finally {

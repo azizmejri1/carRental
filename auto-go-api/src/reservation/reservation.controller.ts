@@ -1,9 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Request, UseGuards } from '@nestjs/common';
-import { CreateReservationDto } from './reservationDto';
+import { CreateReservationDto, ReservationDto } from './reservationDto';
 import { ReservationService } from './reservation.service';
 import { AuthGuard } from 'src/auth/AuthGuard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/roles.enum';
+import { Reservation } from './reservation.entity';
 
 @Controller('reservation')
 export class ReservationController {
@@ -37,6 +38,12 @@ export class ReservationController {
     @Get('getReservationByCompany/:id')
     async getReservationsByCompany(@Param('id') id: number){
         return this.reservationService.getReservationsByCompany(id);
+    }
+
+    @UseGuards(AuthGuard)
+    @Get('getReservationsByUser/:id')
+    async getReservationsByUser(@Param('id') id: number) : Promise<ReservationDto[]>{
+        return this.reservationService.getReservationsByUser(id);
     }
     
 }

@@ -11,12 +11,14 @@ export class CreateCarDto {
   brand: string;
 
   @IsNotEmpty()
-  @IsNumber()
-  pricePerDay: number;
+@IsNumber()
+@Type(() => Number)  // This ensures string → number conversion
+pricePerDay: number;
 
-  @IsNotEmpty()
-  @IsNumber()
-  rentalCompanyId: number;
+@IsNotEmpty()
+@IsNumber()
+@Type(() => Number)
+rentalCompanyId: number;
 }
 
 export class UpdateCarDto {

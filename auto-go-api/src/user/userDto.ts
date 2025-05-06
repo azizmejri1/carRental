@@ -4,6 +4,12 @@ import { IsEmail, IsNotEmpty, IsNumber, IsString, MinLength } from "class-valida
 export class UserDto {
     @IsString()
     name: string;
+
+    @IsString()
+    firstName : string;
+
+    @IsString()
+    lastName : string;
   
     @IsEmail()
     email: string;
@@ -22,4 +28,13 @@ export class ActivateUserDto {
 
     @IsString()
     code :string;
+}
+
+export class UpdatePasswordDto{
+
+    @IsString()
+    oldPassword : string;
+
+    @IsString()
+    newPassword : string;
 }

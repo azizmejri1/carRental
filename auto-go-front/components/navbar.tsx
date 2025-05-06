@@ -28,7 +28,9 @@ export default function Navbar({
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0 flex items-center">
-            <h1 className="text-2xl font-bold text-blue-400">AutoGo</h1>
+            <Link href="/">
+              <h1 className="text-2xl font-bold text-blue-400">AutoGo</h1>
+            </Link>
           </div>
 
           {/* Navigation Links */}
@@ -38,11 +40,47 @@ export default function Navbar({
                 <span className="text-gray-300 font-medium">
                   Welcome, {name}
                 </span>
+
+                <Link
+                  href="/profile"
+                  className="p-2 rounded-full text-gray-300 hover:text-white hover:bg-gray-700 transition duration-150 ease-in-out"
+                  title="Profile"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                    />
+                  </svg>
+                </Link>
+
                 <button
                   onClick={logout}
-                  className="px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition duration-150 ease-in-out"
+                  className="p-2 rounded-full hover:cursor-pointer text-gray-300 hover:text-white hover:bg-gray-700 transition duration-150 ease-in-out"
+                  title="Logout"
                 >
-                  Logout
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                    />
+                  </svg>
                 </button>
               </div>
             ) : (
@@ -55,7 +93,7 @@ export default function Navbar({
                 </Link>
                 <Link
                   href="/login"
-                  className="px-4 py-2 rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition duration-150 ease-in-out"
+                  className="px-4 py-2 hover:cursor-pointer rounded-md text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 transition duration-150 ease-in-out"
                 >
                   Login
                 </Link>
@@ -101,10 +139,32 @@ export default function Navbar({
               <div className="block px-3 py-2 rounded-md text-base font-medium text-gray-300">
                 Welcome, {name}
               </div>
+
+              <Link
+                href="/profile"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
+              >
+                Profile
+              </Link>
+
               <button
                 onClick={logout}
-                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-white bg-blue-600 hover:bg-blue-700"
+                className="flex hover:cursor-pointer items-center w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700"
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
                 Logout
               </button>
             </>

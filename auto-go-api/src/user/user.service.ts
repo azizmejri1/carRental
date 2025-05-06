@@ -2,7 +2,7 @@ import { ConflictException, Injectable, InternalServerErrorException, NotFoundEx
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { User } from './user.entity';
-import { ActivateUserDto, UserDto } from './userDto';
+import { ActivateUserDto, UpdatePasswordDto, UserDto } from './userDto';
 import * as bcrypt from 'bcrypt';
 import { AuthController } from 'src/auth/auth.controller';
 import { Response } from 'express';
@@ -19,11 +19,11 @@ export class UserService {
 
     async create(userDto:UserDto,@Res() res : Response){
       
-        const {name, email, password} = userDto;
+        const {name,firstName,lastName, email, password} = userDto;
         try{
             const saltOrRounds = 10;
             const hashedPassword = await bcrypt.hash(password, saltOrRounds);
-            const user = this.userRepository.create({name, email, password: hashedPassword});
+            const user = this.userRepository.create({firstName,lastName,name, email, password: hashedPassword});
             const code  = await this.getActivationCode(user);
             await this.sendActivationCode(email,code,name);
             await this.authService.login({email, password,role:'user'}, res); 
@@ -156,5 +156,27 @@ export class UserService {
         throw new NotFoundException(`User with ID ${id} not found`);
       }
       return user.activated;
+    }
+
+    async getUserById(id : number){
+      const user = await this.userRepository.findOne({where : {id}});
+      return user;
+    }
+
+    async updatePassword(updatePasswordDto:UpdatePasswordDto,id: number){
+      const {oldPassword,newPassword} = updatePasswordDto;
+      const user = await this.userRepository.findOne({where : {id}});
+      if(!user){
+        throw new NotFoundException(`User with ID ${id} not found`);
+      }
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if(!isMatch){
+        return false
+      }
+      const saltOrRounds = 10;
+      const hashedPassword = await bcrypt.hash(newPassword, saltOrRounds);
+      user.password = hashedPassword;
+      await this.userRepository.save(user);
+      return true;
     }
 }
