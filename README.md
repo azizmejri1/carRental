@@ -7,27 +7,27 @@ A full-stack car rental platform that allows users to browse, filter, and book c
 ## 📸 Screenshots
 
 ### 🏠 Home Page
-![Home Page](./screenshots/homepage.png)
+![Home Page](./screenshots/homepage.PNG)
 
 ### 🔐 Login & Signup
 ![Login Page](./screenshots/login.PNG)
-![Signup Page](./screenshots/signup.png)
+![Signup Page](./screenshots/signup.PNG)
 
 ### 📧 Email Verification
-![Email Verification](./screenshots/email-verification.png)
-![Email Verification1](./screenshots/email.png)
+![Email Verification](./screenshots/email-verification.PNG)
+![Email Verification1](./screenshots/email.PNG)
 
 ### 🚘 Search Results
-![Search Results](./screenshots/search-results.png)
+![Search Results](./screenshots/search-results.PNG)
 
 ### 👤 User Profile
-![User Profile](./screenshots/user-profile.png)
+![User Profile](./screenshots/user-profile.PNG)
 
 ### 🛠️ Admin Dashboard
-![Admin Dashboard](./screenshots/admin-dashboard.png)
+![Admin Dashboard](./screenshots/admin-dashboard.PNG)
 
 ### 🚗 Car Management Interface
-![Car Management](./screenshots/car-management.png)
+![Car Management](./screenshots/car-management.PNG)
 
 
 
