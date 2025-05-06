@@ -15,6 +15,7 @@ A full-stack car rental platform that allows users to browse, filter, and book c
 
 ### 📧 Email Verification
 ![Email Verification](./screenshots/email-verification.png)
+![Email Verification1](./screenshots/email.png)
 
 ### 🚘 Search Results
 ![Search Results](./screenshots/search-results.png)
