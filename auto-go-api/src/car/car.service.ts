@@ -75,9 +75,8 @@ export class CarService {
       }
 
       async findCarsByDate(searchCarDto : SearchCarDto){
-        const pickUpDate = searchCarDto.pickUpDate;
-        const returnDate = searchCarDto.returnDate;
-        const cars = await this.carRepository.find();
+        const {location , pickUpDate , returnDate} = searchCarDto;
+        const cars = await this.carRepository.find({relations: ['company']});
         const availaibleCars : Car[] = [];
         cars.forEach((car)=>{
           const reservations : Reservation[] = car.reservations;
@@ -88,6 +87,9 @@ export class CarService {
                 available = false;
               }
             })
+          }
+          if(car.company.location != location){
+            available = false;
           }
           if(available){
             availaibleCars.push(car);
